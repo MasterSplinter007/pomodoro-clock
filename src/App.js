@@ -5,14 +5,14 @@ import React from "react";
 const App = () => {
   const [breakLength, setBreakLength] = React.useState(5);
   const [sessionLength, setSessionLength] = React.useState(25);
-  const [timeLeft, seTtimeLeft] = React.useState(1500);
-  const [timingType, setTimingtype] = React.useState("SESSION");
+  const [timeLeft, setTimeLeft] = React.useState(1500);
+  const [timingType, setTimingType] = React.useState("SESSION");
   
   const [play, setPlay] = React.useState(false);
   
   const timeout = setTimeout(() => {
     if(timeLeft && play){
-      seTtimeLeft(timeLeft - 1)
+      setTimeLeft(timeLeft - 1)
     }
   }, 1000);
   
@@ -31,24 +31,24 @@ const App = () => {
    const handleSessionIncrease = () => {
     if(sessionLength < 60){
       setSessionLength(sessionLength + 1)
-      seTtimeLeft(timeLeft + 60)
+      setTimeLeft(timeLeft + 60)
     }
   }
   
   const handleSessionDecrease = () => {
     if(sessionLength > 1){
       setSessionLength(sessionLength - 1)
-      seTtimeLeft(timeLeft - 60)
+      setTimeLeft(timeLeft - 60)
     }
   }
   
   const handleReset = () => {
     clearTimeout(timeout);
     setPlay(false);
-    seTtimeLeft(1500);
+    setTimeLeft(1500);
     setBreakLength(5);
     setSessionLength(25);
-    setTimingtype("SESSION");
+    setTimingType("SESSION");
     const audio = document.getElementById("beep");
     audio.pause()
     audio.currentTime = 0;
@@ -62,13 +62,13 @@ const App = () => {
   const resetTimer = () => {
     const audio = document.getElementById("beep");
     if(!timeLeft && timingType === "SESSION"){
-      seTtimeLeft(breakLength * 60)
-      setTimingtype("BREAK")
+      setTimeLeft(breakLength * 60)
+      setTimingType("BREAK")
       audio.play()
     }
     if(!timeLeft && timingType === "BREAK"){
-      seTtimeLeft(sessionLength * 60)
-      setTimingtype("SESSION")
+      setTimeLeft(sessionLength * 60)
+      setTimingType("SESSION")
       audio.pause()
       audio.currentTime = 0;
     }
